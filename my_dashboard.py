@@ -8,22 +8,22 @@ import requests
 from io import BytesIO
 
 
-# Replace "github_username" with your GitHub username and "repo_name" with your repository name
-url_sheet1 = 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/yield_analysis_v0.1.csv'
-url_sheet2 = 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/defect_analysisutf.csv'
+# # Replace "github_username" with your GitHub username and "repo_name" with your repository name
+# url_sheet1 = 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/yield_analysis_v0.1.csv'
+# url_sheet2 = 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/defect_analysisutf.csv'
 
-# Fetch data from the Excel file
-response_sheet1 = requests.get(url_sheet1)
-csv_content_sheet1 = BytesIO(response_sheet1.content)
-df = pd.read_csv(csv_content_sheet1)
-df.columns = df.columns.str.strip()  # Remove leading and trailing whitespace from column names
+# # Fetch data from the Excel file
+# response_sheet1 = requests.get(url_sheet1)
+# csv_content_sheet1 = BytesIO(response_sheet1.content)
+# df = pd.read_csv(csv_content_sheet1)
+# df.columns = df.columns.str.strip()  # Remove leading and trailing whitespace from column names
 
 
-# Fetch data from the CSV file
-response_sheet2 = requests.get(url_sheet2)
-csv_content_sheet2 = BytesIO(response_sheet2.content)
-df2 = pd.read_csv(csv_content_sheet2)
-df2.columns = df2.columns.str.strip()  # Remove leading and trailing whitespace from column names
+# # Fetch data from the CSV file
+# response_sheet2 = requests.get(url_sheet2)
+# csv_content_sheet2 = BytesIO(response_sheet2.content)
+# df2 = pd.read_csv(csv_content_sheet2)
+# df2.columns = df2.columns.str.strip()  # Remove leading and trailing whitespace from column names
 
 
 # Define the URL of the image file in your GitHub repository
@@ -97,6 +97,8 @@ def function_defect():
         if st.button('CONTINUE'):
             try:
                 #df2 = pd.read_csv(r"C:\Users\Asus\Downloads\defect_analysisutf.csv")
+                df2 = pd.read_csv(BytesIO(requests.get('https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/defect_analysisutf.csv').content))
+                df2.columns = df2.columns.str.strip()  # Remove leading and trailing whitespace from column names
                 filtered_df2 = df2[df2['Product (Ticket ID)']==selected_type]
                 result = filtered_df2.groupby('Work Description (Ticket)')['Month'].value_counts().unstack(fill_value=0)
                 result['count'] = result.sum(axis=1)
@@ -111,6 +113,8 @@ def function_performance():
     st.markdown("<h2 style='font-size, 16px;color, blue;'>PERFORMANCE ANALYSIS</h1>", unsafe_allow_html=True)
     # Read the excel file. Add new columns.
     #df=pd.read_excel(r"C:/Users/Asus/Downloads/yield_analysis_v0.1.xlsx", engine='openpyxl')
+    df = pd.read_csv(BytesIO(requests.get('https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/yield_analysis_v0.1.csv').content))
+    df.columns = df.columns.str.strip()  # Remove leading and trailing whitespace from column names
     df['yield_pc'] = ''
     df['dpmo'] = ''
     df['sigma_level'] = ''
