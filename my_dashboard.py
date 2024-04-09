@@ -7,17 +7,16 @@ import warnings
 warnings.filterwarnings("ignore")
 import requests
 from io import BytesIO
-import openpyxl
 
 
 # Replace "github_username" with your GitHub username and "repo_name" with your repository name
-url_sheet1 = 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/yield_analysis_v0.1.xlsx'
+url_sheet1 = 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/yield_analysis_v0.1.csv'
 url_sheet2 = 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/defect_analysisutf.csv'
 
 # Fetch data from the Excel file
 response_sheet1 = requests.get(url_sheet1)
-excel_content_sheet1 = BytesIO(response_sheet1.content)
-df = pd.read_excel(excel_content_sheet1)
+csv_content_sheet1 = BytesIO(response_sheet1.content)
+df = pd.read_csv(csv_content_sheet1)
 
 # Fetch data from the CSV file
 response_sheet2 = requests.get(url_sheet2)
