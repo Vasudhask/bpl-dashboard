@@ -97,7 +97,7 @@ def function_defect():
         if st.button('CONTINUE'):
             try:
                 #df2 = pd.read_csv(r"C:\Users\Asus\Downloads\defect_analysisutf.csv")
-                df2 = pd.read_csv(BytesIO(requests.get('https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/defect_analysisutf.csv').content))
+                df2 = pd.read_csv(BytesIO(requests.get('https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/defect_analysisutf.csv?token=GHSAT0AAAAAACPOHZPGELKA2WBPGFSV3NI4ZQVOKZA').content))
                 st.write(df2)
                 df2.columns = df2.columns.str.strip()  # Remove leading and trailing whitespace from column names
                 filtered_df2 = df2[df2['Product (Ticket ID)']==selected_type]
@@ -114,7 +114,7 @@ def function_performance():
     st.markdown("<h2 style='font-size, 16px;color, blue;'>PERFORMANCE ANALYSIS</h1>", unsafe_allow_html=True)
     # Read the excel file. Add new columns.
     #df=pd.read_excel(r"C:/Users/Asus/Downloads/yield_analysis_v0.1.xlsx", engine='openpyxl')
-    df = pd.read_csv(BytesIO(requests.get('https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/yield_analysis_v0.1.csv').content))
+    df = pd.read_csv(BytesIO(requests.get('https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/yield_analysis_v0.1.csv?token=GHSAT0AAAAAACPOHZPH3ZZGBCWBCIKVLOY2ZQVOL3Q').content))
     df.columns = df.columns.str.strip()  # Remove leading and trailing whitespace from column names
     df['yield_pc'] = ''
     df['dpmo'] = ''
