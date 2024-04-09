@@ -9,26 +9,18 @@ import requests
 from io import BytesIO
 
 # Replace "github_username" with your GitHub username and "repo_name" with your repository name
-urls = {
-    'yield_analysis_v0.1': 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/yield_analysis_v0.1.xlsx',
-    'defect_analysisutf': 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/defect_analysisutf.csv'
-}
+url_sheet1 = 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/yield_analysis_v0.1.xlsx'
+url_sheet2 = 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/defect_analysisutf.csv'
 
-# Dictionary to hold the DataFrames
-dfs = {}
+# Fetch data from the Excel file
+response_sheet1 = requests.get(url_sheet1)
+excel_content_sheet1 = BytesIO(response_sheet1.content)
+df = pd.read_excel(excel_content_sheet1)
 
-# Loop through the URLs and fetch the Excel sheets
-for key, url in urls.items():
-    response = requests.get(url)
-    excel_content = BytesIO(response.content)
-    if key == 'yield_analysis_v0.1':
-        dfs['df'] = pd.read_excel(excel_content)
-    elif key == 'defect_analysisutf':
-        dfs['df2'] = pd.read_csv(excel_content)
-
-# Now you can access the DataFrames using the keys 'df' and 'df2' in the 'dfs' dictionary
-df = dfs['df']
-df2 = dfs['df2']
+# Fetch data from the CSV file
+response_sheet2 = requests.get(url_sheet2)
+csv_content_sheet2 = BytesIO(response_sheet2.content)
+df2 = pd.read_csv(csv_content_sheet2)
 
 
 # Load the image
