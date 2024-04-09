@@ -24,7 +24,7 @@ df2 = pd.read_csv(csv_content_sheet2)
 
 
 # Define the URL of the image file in your GitHub repository
-logo_url = 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/bpllogo.png'
+logo_url = 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/bpllogo.PNG'
 # Display the image using st.image
 st.image(logo_url, width=200)  # Adjust the width as needed
 
