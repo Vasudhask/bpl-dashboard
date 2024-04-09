@@ -98,7 +98,6 @@ def function_defect():
             try:
                 #df2 = pd.read_csv(r"C:\Users\Asus\Downloads\defect_analysisutf.csv")
                 df2 = pd.read_csv(BytesIO(requests.get('https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/defect_analysisutf.csv?token=GHSAT0AAAAAACPOHZPGELKA2WBPGFSV3NI4ZQVOKZA').content))
-                st.write(df2)
                 df2.columns = df2.columns.str.strip()  # Remove leading and trailing whitespace from column names
                 filtered_df2 = df2[df2['Product (Ticket ID)']==selected_type]
                 result = filtered_df2.groupby('Work Description (Ticket)')['Month'].value_counts().unstack(fill_value=0)
