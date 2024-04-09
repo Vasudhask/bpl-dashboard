@@ -108,7 +108,6 @@ def function_performance():
     st.markdown("<h2 style='font-size, 16px;color, blue;'>PERFORMANCE ANALYSIS</h1>", unsafe_allow_html=True)
     # Read the excel file. Add new columns.
     #df=pd.read_excel(r"C:/Users/Asus/Downloads/yield_analysis_v0.1.xlsx", engine='openpyxl')
-    df=df.fillna(' ')
     df['yield_pc'] = ''
     df['dpmo'] = ''
     df['sigma_level'] = ''
