@@ -2,7 +2,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
 from scipy.stats import norm
-from PIL import Image
 import warnings
 warnings.filterwarnings("ignore")
 import requests
@@ -24,12 +23,12 @@ csv_content_sheet2 = BytesIO(response_sheet2.content)
 df2 = pd.read_csv(csv_content_sheet2)
 
 
-# Load the image
-image = Image.open(r'C:\Users\Asus\Downloads\bpllogo.PNG')  # Replace 'path/to/your/image.jpg' with the actual file path
-# Display the image
-st.image(image, width=70)
-st.markdown("<h1 style='font-size, 32px;color, grey;'>VERIFICATION AND VALIDATION: DATA ANALYSIS</h1>", unsafe_allow_html=True)
+# Define the URL of the image file in your GitHub repository
+logo_url = 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/bpllogo.png'
+# Display the image using st.image
+st.image(logo_url, width=200)  # Adjust the width as needed
 
+st.markdown("<h1 style='font-size, 32px;color, grey;'>VERIFICATION AND VALIDATION: DATA ANALYSIS</h1>", unsafe_allow_html=True)
 
 # app.py
 #Define your products and types
