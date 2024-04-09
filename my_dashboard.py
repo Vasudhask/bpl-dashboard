@@ -162,7 +162,7 @@ def function_performance():
 
 
     # Convert the 'months' column to datetime format
-    df['date'] = pd.to_datetime(df['date'], format='%b-%y')
+    #df['date'] = pd.to_datetime(df['date'], format='%b-%y')
 
     def moving_average_specific(df, selected_category, n):
          result = {}
