@@ -16,11 +16,14 @@ url_sheet2 = 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/def
 response_sheet1 = requests.get(url_sheet1)
 csv_content_sheet1 = BytesIO(response_sheet1.content)
 df = pd.read_csv(csv_content_sheet1)
+df.columns = df.columns.str.strip()  # Remove leading and trailing whitespace from column names
+
 
 # Fetch data from the CSV file
 response_sheet2 = requests.get(url_sheet2)
 csv_content_sheet2 = BytesIO(response_sheet2.content)
 df2 = pd.read_csv(csv_content_sheet2)
+df2.columns = df2.columns.str.strip()  # Remove leading and trailing whitespace from column names
 
 
 # Define the URL of the image file in your GitHub repository
