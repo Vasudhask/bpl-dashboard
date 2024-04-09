@@ -6,6 +6,30 @@ from scipy.stats import norm
 from PIL import Image
 import warnings
 warnings.filterwarnings("ignore")
+import requests
+from io import BytesIO
+
+# Replace "github_username" with your GitHub username and "repo_name" with your repository name
+urls = {
+    'yield_analysis_v0.1': 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/yield_analysis_v0.1.xlsx',
+    'defect_analysisutf': 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/defect_analysisutf.csv'
+}
+
+# Dictionary to hold the DataFrames
+dfs = {}
+
+# Loop through the URLs and fetch the Excel sheets
+for key, url in urls.items():
+    response = requests.get(url)
+    excel_content = BytesIO(response.content)
+    if key == 'yield_analysis_v0.1':
+        dfs['df'] = pd.read_excel(excel_content)
+    elif key == 'defect_analysisutf':
+        dfs['df2'] = pd.read_csv(excel_content)
+
+# Now you can access the DataFrames using the keys 'df' and 'df2' in the 'dfs' dictionary
+df = dfs['df']
+df2 = dfs['df2']
 
 
 # Load the image
@@ -78,7 +102,7 @@ def function_defect():
 
         if st.button('CONTINUE'):
             try:
-                df2 = pd.read_csv(r"C:\Users\Asus\Downloads\defect_analysisutf.csv")
+                #df2 = pd.read_csv(r"C:\Users\Asus\Downloads\defect_analysisutf.csv")
                 filtered_df2 = df2[df2['Product (Ticket ID)']==selected_type]
                 result = filtered_df2.groupby('Work Description (Ticket)')['Month'].value_counts().unstack(fill_value=0)
                 result['count'] = result.sum(axis=1)
@@ -92,7 +116,7 @@ def function_defect():
 def function_performance():
     st.markdown("<h2 style='font-size, 16px;color, blue;'>PERFORMANCE ANALYSIS</h1>", unsafe_allow_html=True)
     # Read the excel file. Add new columns.
-    df=pd.read_excel(r"C:/Users/Asus/Downloads/yield_analysis_v0.1.xlsx", engine='openpyxl')
+    #df=pd.read_excel(r"C:/Users/Asus/Downloads/yield_analysis_v0.1.xlsx", engine='openpyxl')
     df=df.fillna(' ')
     df['yield_pc'] = ''
     df['dpmo'] = ''
