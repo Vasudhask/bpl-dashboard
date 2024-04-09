@@ -15,7 +15,7 @@ url_sheet2 = 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/def
 # Fetch data from the Excel file
 response_sheet1 = requests.get(url_sheet1)
 excel_content_sheet1 = BytesIO(response_sheet1.content)
-df = pd.read_excel(excel_content_sheet1)
+df = pd.read_excel(excel_content_sheet1,engine="openpyxl")
 
 # Fetch data from the CSV file
 response_sheet2 = requests.get(url_sheet2)
