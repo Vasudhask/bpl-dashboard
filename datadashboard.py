@@ -171,7 +171,7 @@ elif selected_analysis == 'State-wise':
 
         # Load GeoDataFrame
         #gdf = gpd.read_file(r"C:\Users\Asus\Downloads\Indian_States.txt") 
-        response = requests.get("https://raw.githubusercontent.com/your_username/repository_name/main/geofile.txt")
+        response = requests.get("https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/Indian_States.txt")
         gdf = gpd.read_file(StringIO(response.text))
         gdf_filtered = gdf[gdf["NAME_1"].isin(state_names)]
 
