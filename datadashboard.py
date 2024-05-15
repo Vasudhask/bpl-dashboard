@@ -203,7 +203,7 @@ elif selected_analysis == 'State-wise':
             ).add_to(m)
 
         # Display the map in Streamlit
-        st.write(folium_static(m))
+        folium_static(m)
 
     except AttributeError:
         pass
