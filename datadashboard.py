@@ -170,7 +170,6 @@ elif selected_analysis == 'State-wise':
         state_values = list(df['State'].value_counts())
 
         # Load GeoDataFrame
-        #gdf = gpd.read_file(r"C:\Users\Asus\Downloads\Indian_States.txt") 
         response = requests.get("https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/Indian_States.txt")
         gdf = gpd.read_file(StringIO(response.text))
         gdf_filtered = gdf[gdf["NAME_1"].isin(state_names)]
@@ -315,60 +314,64 @@ elif selected_analysis == 'Performance':
                      st.write(f"The Configurations present in {selected_type} are {newfunction(selected_type)}")
                      if st.button('View Graphs',key='first'):
                           filtered_config_list = type_viz(selected_type)
-                          for i in range(0, len(filtered_config_list)):
-                               filtered_config_df = pd.DataFrame(filtered_config_list[i])
+                        #   for i in range(0, len(filtered_config_list)):
+                        #        filtered_config_df = pd.DataFrame(filtered_config_list[i])
+                          for filtered_config_df in filtered_config_list:
                 
-                          #Yield% bar plot
-                          fig, ax = plt.subplots(figsize=(8, 4))
-                          bars = ax.bar(filtered_config_df['date'], filtered_config_df['yield_pc'], width=9) 
-                          plt.xticks(rotation=90,fontsize=8)
-                          plt.yticks(fontsize=8)
-                          plt.gca().set_ylim(0, 100)
-                          plt.xlabel('Months',fontsize=8)
-                          plt.ylabel('Yield%',fontsize=8)
-                          plt.title(f'Yield% Across Months',fontsize=8,pad=20)
+                            #Yield% bar plot
+                            fig, ax = plt.subplots(figsize=(8, 4))
+                            bars = ax.bar(filtered_config_df['date'], filtered_config_df['yield_pc'], width=9) 
+                            plt.xticks(rotation=90,fontsize=8)
+                            plt.yticks(fontsize=8)
+                            plt.gca().set_ylim(0, 100)
+                            plt.xlabel('Months',fontsize=8)
+                            plt.ylabel('Yield%',fontsize=8)
+                            #plt.title(f'Yield% Across Months',fontsize=8,pad=20)
+                            ax.set_title(f"Yield% for {filtered_config_df['configuration'].iloc[0]}")
+                                                
+                            for bar in bars:
+                                        height = bar.get_height()
+                                        ax.annotate('{:.2f}'.format(height), xy=(bar.get_x() + bar.get_width() / 2, height),xytext=(0, 3), textcoords="offset points", ha='center', va='bottom',fontsize=6)
+
+                            ax.grid(True) 
+                            st.pyplot(fig)
                                             
-                          for bar in bars:
-                                    height = bar.get_height()
-                                    ax.annotate('{:.2f}'.format(height), xy=(bar.get_x() + bar.get_width() / 2, height),xytext=(0, 3), textcoords="offset points", ha='center', va='bottom',fontsize=6)
+                            #DPMO Plot
+                            fig2, ax2 = plt.subplots(figsize=(8, 4))
+                            newbars = ax2.bar(filtered_config_df['date'], filtered_config_df['dpmo'] ,width=9)
+                            plt.xticks(rotation=90,fontsize=8)
+                            plt.yticks(fontsize=8)
+                            plt.gca().set_ylim(0, max(filtered_config_df['dpmo']))
+                            plt.xlabel('Months',fontsize=8)
+                            plt.ylabel('DPMO',fontsize=8)
+                            #plt.title(f'DPMO Across Months',fontsize=8,pad=20)
+                            ax.set_title(f"DPMO for {filtered_config_df['configuration'].iloc[0]}")
 
-                          ax.grid(True) 
-                          st.pyplot(fig)
-                                         
-                          #DPMO Plot
-                          fig2, ax2 = plt.subplots(figsize=(8, 4))
-                          newbars = ax2.bar(filtered_config_df['date'], filtered_config_df['dpmo'] ,width=9)
-                          plt.xticks(rotation=90,fontsize=8)
-                          plt.yticks(fontsize=8)
-                          plt.gca().set_ylim(0, max(filtered_config_df['dpmo']))
-                          plt.xlabel('Months',fontsize=8)
-                          plt.ylabel('DPMO',fontsize=8)
-                          plt.title(f'DPMO Across Months',fontsize=8,pad=20)
-
-                          for newbar in newbars:
-                                height_2 = newbar.get_height()
-                                ax2.annotate('{:.2f}'.format(height_2), xy=(newbar.get_x() + newbar.get_width() / 2, height_2),xytext=(0, 3), textcoords="offset points", ha='center', va='bottom',fontsize=6)
+                            for newbar in newbars:
+                                    height_2 = newbar.get_height()
+                                    ax2.annotate('{:.2f}'.format(height_2), xy=(newbar.get_x() + newbar.get_width() / 2, height_2),xytext=(0, 3), textcoords="offset points", ha='center', va='bottom',fontsize=6)
+                                
+                            ax2.grid(True)    
+                            st.pyplot(fig2)
                             
-                          ax2.grid(True)    
-                          st.pyplot(fig2)
-                          
-                          #Sigma Level Plot
-                          fig3, ax3 = plt.subplots(figsize=(8, 4))
-                          colors = ['red' if value < 3.5 else 'blue' for value in filtered_config_df['sigma_level']]
-                          bars_3 = ax3.bar(filtered_config_df['date'], filtered_config_df['sigma_level'],width=9,color=colors) 
-                          plt.xticks(rotation=90,fontsize=8)
-                          plt.yticks(fontsize=8)
-                          plt.gca().set_ylim(0, max(filtered_config_df['sigma_level']))
-                          plt.xlabel('Months',fontsize=8)
-                          plt.ylabel('Sigma Level',fontsize=8)
-                          plt.title(f'Sigma Level Across Months',fontsize=8,pad=20)
-                          for bar_3 in bars_3:
-                                height_3 = bar_3.get_height()
-                                ax3.annotate('{:.2f}'.format(height_3), xy=(bar_3.get_x() + bar_3.get_width() / 2, height_3),xytext=(0, 3), textcoords="offset points", ha='center', va='bottom',fontsize=6)
-                    
-                          ax3.grid(True)
-                          st.pyplot(fig3)
-                          st.write('Please note: Sigma Level below 3.5 value is marked red.')
+                            #Sigma Level Plot
+                            fig3, ax3 = plt.subplots(figsize=(8, 4))
+                            colors = ['red' if value < 3.5 else 'blue' for value in filtered_config_df['sigma_level']]
+                            bars_3 = ax3.bar(filtered_config_df['date'], filtered_config_df['sigma_level'],width=9,color=colors) 
+                            plt.xticks(rotation=90,fontsize=8)
+                            plt.yticks(fontsize=8)
+                            plt.gca().set_ylim(0, max(filtered_config_df['sigma_level']))
+                            plt.xlabel('Months',fontsize=8)
+                            plt.ylabel('Sigma Level',fontsize=8)
+                            #plt.title(f'Sigma Level Across Months',fontsize=8,pad=20)
+                            ax.set_title(f"Sigma Level for {filtered_config_df['configuration'].iloc[0]}")
+                            for bar_3 in bars_3:
+                                    height_3 = bar_3.get_height()
+                                    ax3.annotate('{:.2f}'.format(height_3), xy=(bar_3.get_x() + bar_3.get_width() / 2, height_3),xytext=(0, 3), textcoords="offset points", ha='center', va='bottom',fontsize=6)
+                        
+                            ax3.grid(True)
+                            st.pyplot(fig3)
+                            st.write('Please note: Sigma Level below 3.5 value is marked red.')
           
                          # !!!!!!!!!!!!!!!!!!!!!!!!!!!  END OF PRODUCT-WISE  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 
