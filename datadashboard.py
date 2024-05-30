@@ -471,6 +471,8 @@ elif selected_analysis == 'Defect':
 
          if st.checkbox('NEXT'):
               st.markdown(f"<h4>Defect Analysis for {selected_product}</h4>", unsafe_allow_html=True)
+              st.write("Please note that the missing months indicate 'No documented defect in the configuration during the whole month'")
+              st.write("                                                                                                                ")
         
               for config in product_category[selected_product]:
                    st.markdown(f"<h5>{config}</h5>", unsafe_allow_html=True)
@@ -483,7 +485,6 @@ elif selected_analysis == 'Defect':
                          result = filtered_df.groupby('Work Description (Ticket)')['Month'].value_counts().unstack(fill_value=0)
                          result['count'] = result.sum(axis=1)
                          st.write(result)
-                         st.write("Please note that the missing months indicate 'No documented defect in the configuration during the whole month'")
                     except Exception as e:
                          st.error(f"An error occurred: {e}")
 
