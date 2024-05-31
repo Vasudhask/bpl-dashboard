@@ -445,7 +445,7 @@ elif selected_analysis == 'Performance':
                               barss_3 = axx3.bar(new_df_result.index, new_df_result['sigma_level'], color=colors) 
                               plt.xlabel('Category')
                               plt.ylabel('Sigma Level Values')
-                              plt.title('Sigma Level Values for different categories')
+                              plt.title('Sigma Level values for different categories')
                               plt.xticks(rotation=45)
 
                             #   for i, value in enumerate(new_df_result['sigma_level']):
