@@ -104,7 +104,7 @@ if selected_analysis == 'Home Page':
         st.info("**City-wise Defect Analysis:** Displays defect occurrences in different cities.")
     # Company information paragraph
     with right_column:
-        st.success("**BPL Medical Technologies** has multiple products across 10+ different categories. ")
+        st.success("**The Organization** has multiple products across 10+ different categories. ")
 
 
 ############################################ CITY-WISE DEFECT ####################################################################
