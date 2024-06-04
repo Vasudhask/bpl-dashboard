@@ -57,12 +57,6 @@ st.markdown(custom_css, unsafe_allow_html=True)
 # Define the sidebar options
 analysis_options = ['Home Page', 'State-wise', 'City-wise', 'Performance', 'Defect']
 
-# BPL Logo
-logo_url = 'https://raw.githubusercontent.com/Vasudhask/bpl-dashboard/main/bpllogo.PNG'
-
-# Display the image using st.image
-st.sidebar.image(logo_url, width=200)  # Adjust the width as needed
-
 # Add a selectbox in the sidebar for the user to choose the analysis
 st.sidebar.markdown("<h1 style='font-weight:bold;'>Select Analysis</h1>", unsafe_allow_html=True)
 selected_analysis = st.sidebar.selectbox('', analysis_options)
